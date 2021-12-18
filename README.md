@@ -1,9 +1,5 @@
 # Capstone_Project
 
-### Story
-
-You are presenting this to a medical company that wants to make money by percribing meds that will help people's symptoms after getting vaccinated so that the medicine is ready for the customer in case they start experiencing that symptom.
-
 ### Goals
 
  1. Get the dataset on how many people got the vaccine
