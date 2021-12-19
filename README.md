@@ -10,3 +10,6 @@
 ### Data source
 
 https://vaers.hhs.gov/data/datasets.html?
+
+### Updates:
+12/18/21: project submitted, working on the presentation
