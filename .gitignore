@@ -40,3 +40,5 @@ vignettes/*.pdf
 
 # Ignore large data files
 *.csv
+#Ignore checkpoints
+.ipynb_checkpoints
