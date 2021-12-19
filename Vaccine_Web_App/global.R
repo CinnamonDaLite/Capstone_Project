@@ -1,0 +1,10 @@
+library(tidyverse)
+library(shiny)
+library(lubridate)
+library(maps)
+library(DT)
+library(htmltools)
+library(plotly)
+library(leaflet)
+
+load('Vax_data.RData')
