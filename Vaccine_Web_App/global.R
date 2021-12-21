@@ -5,6 +5,7 @@ library(maps)
 library(DT)
 library(htmltools)
 library(plotly)
-library(leaflet)
+library(bslib)
+
 
 load('Vax_data.RData')

@@ -7,41 +7,35 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shinydashboard)
-dashboardPage(
+shinyUI(fluidPage(
     
     # Application title
-    dashboardHeader(title = "Carcrash Data"),
+    title = "Vaccine Treatment",
+    
+    # Application theme
+    theme = bs_theme(bootswatch = 'slate'),
     
     # create input for items
-    dashboardSidebar(
-        sidebarMenu( 
-            menuItem("Graphs", tabName = 'Graphs', icon = icon('chart-bar')),
-            menuItem("Raw Data", tabName = 'map', icon = icon("map"))
+    sidebarLayout(
+        sidebarPanel(
+            selectizeInput('VAX_TYPE', label = 'Vaccine for', choices = NULL),
+            selectizeInput('SYMPTOM_TEXT', label = 'Symptom', choices = NULL)
         ),
-        selectizeInput('VAX_TYPE', label = 'Vaccine for', choices = NULL),
-        selectizeInput('SYMPTOM_TEXT', label = 'Symptom', choices = NULL)
-    ),
-    
-    # Show a plot of the generated distribution
-    dashboardBody(
-        tabItems(
-            tabItem(tabName = "Graphs",
-                    fluidRow(
-                        box(plotlyOutput("symptoms", height = "360", width = "540")),
-                        box(plotlyOutput("Critical", height = "360", width = "540")),
-                        box(plotlyOutput("Dead", height = "360", width = "540")),
-                        box(plotlyOutput("Symptom_man", height = "360", width = "540")),   
-                        box(plotlyOutput("Critical_man", height = "360", width = "540")),
-                        box(plotlyOutput("Dead_man", height = "360", width = "540")) 
-                    )),
-            tabItem(tabName = 'map', 
-                    #this will create a space for us to display our map
-                    leafletOutput(outputId = "mymap"), #this allows me to put the checkmarks ontop of the map to allow people to view earthquake depth or overlay a heatmap
-                    absolutePanel(top = 60, left = 20, 
-                                  checkboxInput("markers", "Depth", FALSE),
-                                  checkboxInput("heat", "Heatmap", FALSE)
-                    ))
+    mainPanel(
+        tabsetPanel(
+            tabPanel("By Gender", fluidRow(
+                box(plotlyOutput("symptoms", height = "360", width = "540")),
+                box(plotlyOutput("Critical", height = "360", width = "540")),
+                box(plotlyOutput("Dead", height = "360", width = "540")))),
+            tabPanel("By Age", fluidRow(
+                box(plotlyOutput("Symptom_age", height = "360", width = "540")),
+                box(plotlyOutput("Critical_age", height = "360", width = "540")),
+                box(plotlyOutput("Dead_age", height = "360", width = "540")))),
+            tabPanel("By Manufacturer", fluidRow(
+                box(plotlyOutput("Symptom_man", height = "360", width = "540")),
+                box(plotlyOutput("Critical_man", height = "360", width = "540")),
+                box(plotlyOutput("Dead_man", height = "360", width = "540"))))
+            )
         )
     )
-)
+))
