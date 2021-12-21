@@ -6,3 +6,10 @@
  2. What are the adverse effects
  3. severity of the side (Life threatening)
  4. Get symptoms and find the most common for each age group and gender and Vaccine Manufacturer
+
+### Data source
+
+https://vaers.hhs.gov/data/datasets.html?
+
+### Updates:
+12/18/21: project submitted, working on the presentation
