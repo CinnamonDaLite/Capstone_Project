@@ -12,5 +12,5 @@
 https://vaers.hhs.gov/data/datasets.html?
 
 ### Updates:
-12/18/21: project submitted, working on the presentation
-12/20/21: putting age groups and gender on separate graphs (cleanup)
+ - 12/18/21: project submitted, working on the presentation
+ - 12/20/21: putting age groups and gender on separate graphs (cleanup)
