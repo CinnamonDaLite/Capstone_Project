@@ -1,17 +1,36 @@
 # Capstone_Project
 
+### Motivation
+ - If the vaccine is safe, 
+ - why are there people not taking it?
+   - could it be because they are not reciving the treatment they need to bear through their symptoms for this vaccine?
+   - Or could it be that the vaccine is not as safe as we thought?
+ - How can we fix it so everyone can safely take the vaccine?
+
 ### Goals
 
- 1. Get the dataset on how many people got the vaccine
- 2. What are the adverse effects
- 3. severity of the side (Life threatening)
- 4. Get symptoms and find the most common for each age group and gender and Vaccine Manufacturer
+#### What kind of medication would help our patiants after taking the vaccine?
+Finding top ten most common symptoms for the COVID-19 vaccine
+4 Bar graphs:
+ - Overall
+ - Per Gender
+ - Per age group
+ - Per Manufacturer
+
+#### How safe is the vaccine?
+4 Bar graphs (stack, percents):
+ - Overall
+ - Per Gender
+ - Per age group
+ - Per Manufacturer
 
 ### Data source
 
 https://vaers.hhs.gov/data/datasets.html?
 
 ### Updates:
- - 12/22/21: Fixed box problem. But might change the narative to find a conclusion
+ - 12/22/21: Fixed box problem. Changed narrative to find a conclusion.
+   - Disclamer: I have no intent to show any political bias. I'm answering these questions with data so that all of us may see it for ourselves.
+   - Note: I am doing everything I can to avoid anything that could be misleading, or would lead to any sort of bias.
  - 12/20/21: putting age groups and gender on separate graphs (cleanup)
  - 12/18/21: project submitted, working on the presentation
