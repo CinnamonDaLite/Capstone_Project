@@ -12,5 +12,6 @@
 https://vaers.hhs.gov/data/datasets.html?
 
 ### Updates:
+ - 12/22/21: Fixed box problem. But might change the narative to find a conclusion
  - 12/20/21: putting age groups and gender on separate graphs (cleanup)
  - 12/18/21: project submitted, working on the presentation
