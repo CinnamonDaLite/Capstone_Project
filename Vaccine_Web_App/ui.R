@@ -6,7 +6,7 @@
 #
 #    http://shiny.rstudio.com/
 #
-
+library(bslib)
 shinyUI(fluidPage(
     
     # Application title
@@ -24,17 +24,17 @@ shinyUI(fluidPage(
     mainPanel(
         tabsetPanel(
             tabPanel("By Gender", fluidRow(
-                box(plotlyOutput("symptoms", height = "360", width = "540")),
-                box(plotlyOutput("Critical", height = "360", width = "540")),
-                box(plotlyOutput("Dead", height = "360", width = "540")))),
+                plotlyOutput("symptoms", height = "360", width = "540"),
+                plotlyOutput("Critical", height = "360", width = "540"),
+                plotlyOutput("Dead", height = "360", width = "540"))),
             tabPanel("By Age", fluidRow(
-                box(plotlyOutput("Symptom_age", height = "360", width = "540")),
-                box(plotlyOutput("Critical_age", height = "360", width = "540")),
-                box(plotlyOutput("Dead_age", height = "360", width = "540")))),
+                plotlyOutput("Symptom_age", height = "360", width = "540"),
+                plotlyOutput("Critical_age", height = "360", width = "540"),
+                plotlyOutput("Dead_age", height = "360", width = "540"))),
             tabPanel("By Manufacturer", fluidRow(
-                box(plotlyOutput("Symptom_man", height = "360", width = "540")),
-                box(plotlyOutput("Critical_man", height = "360", width = "540")),
-                box(plotlyOutput("Dead_man", height = "360", width = "540"))))
+                plotlyOutput("Symptom_man", height = "360", width = "540"),
+                plotlyOutput("Critical_man", height = "360", width = "540"),
+                plotlyOutput("Dead_man", height = "360", width = "540")))
             )
         )
     )

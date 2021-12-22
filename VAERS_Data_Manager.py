@@ -11,10 +11,8 @@ import pandas as pd
 #vax_data_2021 will take a while, there is a lot of information in there
 #used low_memory = False argument to speed up the process as warned
 
-vax_data_2021 = pd.read_csv('../VAERS_Data/2021VAERSData/2021VAERSDATA.csv', 
-                            low_memory=False)
-vax_types_2021 = pd.read_csv('../VAERS_Data/2021VAERSData/2021VAERSVAX.csv',
-                            low_memory=False)
+vax_data_2021 = pd.read_csv('2021VAERSDATA.csv', low_memory = False , encoding="iso-8859-1")
+vax_types_2021 = pd.read_csv('2021VAERSVAX.csv', low_memory = False , encoding="iso-8859-1")
 
 #In the testing portion, I created a new variable. But after testing it and seeing how it worked,
 #I save back the same dataframe after determining what variables/columns I need
@@ -40,4 +38,4 @@ vax_info_2021 = vax_info_2021.fillna(value = null_col)
 vax_info_2021 = vax_info_2021.dropna()
 
 #Save it back to a csv file to be read by Rstudio
-vax_info_2021.to_csv('Statistical_Ploting_R/VaxReports.csv')
+vax_info_2021.to_csv('VaxReports.csv')
