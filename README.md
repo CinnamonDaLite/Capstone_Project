@@ -27,8 +27,8 @@ Finding top ten most common symptoms for the COVID-19 vaccine
 
 ### Data sources
 
-https://vaers.hhs.gov/data/datasets.html?
-https://covid.cdc.gov/covid-data-tracker/#vaccinations_vacc-total-admin-rate-total
+- https://vaers.hhs.gov/data/datasets.html?
+- https://covid.cdc.gov/covid-data-tracker/#vaccinations_vacc-total-admin-rate-total
 
 ### Updates:
  - 12/23/21_V2: Added per manufacturer last second
