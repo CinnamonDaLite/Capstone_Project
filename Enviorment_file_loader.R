@@ -9,10 +9,20 @@ library(tidyverse)
 reports = nrow(Vax_reports)
 full_vax = Vax_reports %>% filter(VAX_DOSE_SERIES >= 2)
 full_reports = nrow(full_vax)
+full_jnj_v = full_vax %>% filter(VAX_MANU == 'JANSSEN')
+full_pf_v = full_vax %>% filter(VAX_MANU == 'PFIZER\\BIONTECH')
+full_mod_v = full_vax %>% filter(VAX_MANU == 'MODERNA')
+full_unk_v = full_vax %>% filter(VAX_MANU == 'UNKNOWN MANUFACTURER')
 Vax_total = Vax_total %>% 
-  select('Administered_Dose1_Recip', 'Series_Complete_Yes') %>%
+  select('Administered_Dose1_Recip', 'Series_Complete_Yes', 
+         'Series_Complete_Janssen', 'Series_Complete_Moderna',
+         'Series_Complete_Pfizer', 'Series_Complete_Unk_Manuf') %>%
   summarise(One_shot = sum(Administered_Dose1_Recip), 
-            full = sum(Series_Complete_Yes))
+            full = sum(Series_Complete_Yes),
+            full_JnJ = sum(Series_Complete_Janssen),
+            full_mod = sum(Series_Complete_Moderna),
+            full_pf = sum(Series_Complete_Pfizer),
+            full_unk = sum(Series_Complete_Unk_Manuf))
 
 One = Vax_total %>%
   summarise(no_symptom = ((One_shot - reports)/One_shot * 100),
@@ -28,10 +38,48 @@ full_count = Vax_total %>%
             deadliness = (sum(full_vax$DIED == 'Y')/full) * 100) %>%
   gather(key = 'Condition', 'full')
 
-Vax_total = inner_join(One, full_count)
+overall = inner_join(One, full_count)
+
+Janssen = Vax_total %>%
+  summarise(no_symptom = (full_JnJ - nrow(full_jnj_v))/full_JnJ * 100,
+            symptoms = (nrow(full_jnj_v)/full_JnJ) * 100,
+            critical = (sum(full_jnj_v$L_THREAT == 'Y')/full_JnJ) * 100,
+            deadliness = (sum(full_jnj_v$DIED == 'Y')/full_JnJ) * 100) %>%
+  gather(key = 'Condition', 'full_jnj')
+
+
+Moderna = Vax_total %>%
+  summarise(no_symptom = (full_mod - nrow(full_mod_v))/full_mod * 100,
+            symptoms = (nrow(full_mod_v)/full_mod) * 100,
+            critical = (sum(full_mod_v$L_THREAT == 'Y')/full_mod) * 100,
+            deadliness = (sum(full_mod_v$DIED == 'Y')/full_mod) * 100) %>%
+  gather(key = 'Condition', 'full_mod')
+
+man1 = inner_join(Janssen, Moderna)
+man_join_1 = inner_join(overall, man1)
+rm(overall, man1, One, full_count, Janssen, Moderna)
+
+Pfizer = Vax_total %>%
+  summarise(no_symptom = (full_pf - nrow(full_pf_v))/full_pf * 100,
+            symptoms = (nrow(full_pf_v)/full_pf) * 100,
+            critical = (sum(full_pf_v$L_THREAT == 'Y')/full_pf) * 100,
+            deadliness = (sum(full_pf_v$DIED == 'Y')/full_pf) * 100) %>%
+  gather(key = 'Condition', 'full_pf')
+
+Other = Vax_total %>%
+  summarise(no_symptom = (full_unk - nrow(full_unk_v))/full_unk * 100,
+            symptoms = (nrow(full_unk_v)/full_unk) * 100,
+            critical = (sum(full_unk_v$L_THREAT == 'Y')/full_unk) * 100,
+            deadliness = (sum(full_unk_v$DIED == 'Y')/full_unk) * 100) %>%
+  gather(key = 'Condition', 'full_unk')
+
+man2 = inner_join(Pfizer, Other)
+Vax_total = inner_join(man_join_1, man2)
+rm(man_join_1, man2, Pfizer, Other, reports, full_reports,
+   full_vax, full_jnj_v, full_mod_v, full_pf_v, full_unk_v) #getting rid of excess datasets
 
 Vax_total = Vax_total %>% 
-  gather(key = 'shot', value = 'Percentage', 2:3)
+  gather(key = 'shot', value = 'Percentage', 2:7)
 
 Vax_reports = Vax_reports %>% select(-'X', -'VAERS_ID', -'index', -'index_x', -'index_y')
 
