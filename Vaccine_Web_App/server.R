@@ -9,16 +9,19 @@
 
 shinyServer(function(input, output, session) {
     
-    updateSelectInput(session, 'VAX_TYPE', choices = unique(Vax_load$VAX_TYPE))
-    
     updateSelectInput(session, 'SYMPTOM_TEXT', choices = unique(Vax_load$SYMPTOM_TEXT))
     
     common_sym <- reactive({
         Vax_load %>%
-            filter(VAX_TYPE == input$VAX_TYPE,
-                   SYMPTOM_TEXT == input$SYMPTOM_TEXT)
+            filter(SYMPTOM_TEXT == input$SYMPTOM_TEXT)
     })
     
+    output$overall <- renderPlotly({
+        plot_ly(Vax_total, x = ~shot, y = ~Percentage, 
+                type = 'bar', color = ~Condition) %>%
+            layout(title = 'Overall chances of vaccine symptoms',
+                   barmode = 'stack')
+    })
     
     output$symptoms <- renderPlotly({
         plot_ly(common_sym(), x = ~SEX, y = ~Count, 

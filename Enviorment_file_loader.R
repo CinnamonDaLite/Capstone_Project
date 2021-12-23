@@ -1,84 +1,71 @@
 #since python did the heavy workload,
 #all we need to do is run this to be a once and done thing
 #this is intended to make the shiny app run faster
-Vax = read.csv('VaxReports.csv')
-
-#the rest of this portion is testing
+Vax_reports = read.csv('COVID_Reports.csv')
+Vax_total = read.csv('Vax_count.csv')
 
 library(tidyverse)
 
-#1. Find the deadliest vaccine and the most reported
+reports = nrow(Vax_reports)
+full_vax = Vax_reports %>% filter(VAX_DOSE_SERIES >= 2)
+full_reports = nrow(full_vax)
+Vax_total = Vax_total %>% 
+  select('Administered_Dose1_Recip', 'Series_Complete_Yes') %>%
+  summarise(One_shot = sum(Administered_Dose1_Recip), 
+            full = sum(Series_Complete_Yes))
 
-Vax = Vax %>% select(-'X', -'VAERS_ID')
+One = Vax_total %>%
+  summarise(no_symptom = ((One_shot - reports)/One_shot * 100),
+            symptoms = (reports/One_shot * 100),
+            critical = (sum(Vax_reports$L_THREAT == 'Y')/One_shot * 100),
+            deadliness = (sum(Vax_reports$DIED == 'Y')/One_shot * 100)) %>%
+  gather(key = 'Condition', 'one_shot')
 
-Vax$AGE_YRS = cut(Vax$AGE_YRS, breaks = c(0,18,35,50,120),
-                  labels = c('under 18', '18 to 35', '35 to 50', 'over 50'))
+full_count = Vax_total %>%
+  summarise(no_symptom = (full - full_reports)/full * 100,
+            symptoms = (full_reports/full) * 100,
+            critical = (sum(full_vax$L_THREAT == 'Y')/full) * 100,
+            deadliness = (sum(full_vax$DIED == 'Y')/full) * 100) %>%
+  gather(key = 'Condition', 'full')
 
-Vax_load = Vax %>% 
-  select(VAX_TYPE, VAX_MANU, AGE_YRS, SEX, SYMPTOM_TEXT, 
-         L_THREAT, DIED) %>%
+Vax_total = inner_join(One, full_count)
+
+Vax_total = Vax_total %>% 
+  gather(key = 'shot', value = 'Percentage', 2:3)
+
+Vax_reports = Vax_reports %>% select(-'X', -'VAERS_ID', -'index', -'index_x', -'index_y')
+
+Vax_reports$AGE_YRS = cut(as.numeric(Vax_reports$AGE_YRS), breaks = c(0,5,12,18,35,50,65,120),
+                  labels = c('under 5', '5 to 11', '12 to 17', '18 to 35', 
+                             '35 to 50','50 to 65','65+'))
+
+Vax_load = Vax_reports %>% 
+  select(VAX_TYPE, VAX_MANU, AGE_YRS, SEX, SYMPTOM_TEXT, L_THREAT, DIED, VAX_DOSE_SERIES) %>%
   separate_rows(SYMPTOM_TEXT, sep = '[^[:alpha:]]+') %>%
-  group_by(VAX_TYPE, VAX_MANU, AGE_YRS, SEX, L_THREAT, DIED, 
+  group_by(VAX_TYPE, VAX_MANU, AGE_YRS, SEX, L_THREAT, DIED, VAX_DOSE_SERIES,
            SYMPTOM_TEXT = tolower(SYMPTOM_TEXT)) %>%
   summarise(Count = n()) %>%
   filter(VAX_TYPE != 'UNK' & SEX != 'U' &
-           (SYMPTOM_TEXT == 'headache' | SYMPTOM_TEXT == 'stomache' |
-              SYMPTOM_TEXT == 'hyperthyroidism' | SYMPTOM_TEXT == 'aches' |
-              SYMPTOM_TEXT == 'itching' | SYMPTOM_TEXT == 'nausea' |
-              SYMPTOM_TEXT == 'redness' | SYMPTOM_TEXT == 'soreness' |
-              SYMPTOM_TEXT == 'stuffy' | SYMPTOM_TEXT == 'tightness' | 
-              SYMPTOM_TEXT == 'weakness' | SYMPTOM_TEXT == 'bleeding' |
-              SYMPTOM_TEXT == 'allergic' | SYMPTOM_TEXT == 'appendicitis' |
-              SYMPTOM_TEXT == 'chills' | SYMPTOM_TEXT == 'hypersensitivity' |
-              SYMPTOM_TEXT == 'diarrhea' | SYMPTOM_TEXT == 'numbness' |
-              SYMPTOM_TEXT == 'tingling' | SYMPTOM_TEXT == 'swelling' |
-              SYMPTOM_TEXT == 'sweating'| SYMPTOM_TEXT == 'suicidal' |
-              SYMPTOM_TEXT == 'stiff' | SYMPTOM_TEXT == 'colostomy' |
-              SYMPTOM_TEXT == 'dizziness' | SYMPTOM_TEXT == 'dizzy' |
-              SYMPTOM_TEXT == 'fever' | SYMPTOM_TEXT == 'swollen' |
-              SYMPTOM_TEXT == 'fatigue' | SYMPTOM_TEXT == 'sore' |
-              SYMPTOM_TEXT == 'rash' | SYMPTOM_TEXT == 'itchy' |
-              SYMPTOM_TEXT == 'painful' | SYMPTOM_TEXT == 'hives' |
-              SYMPTOM_TEXT == 'lymph' | SYMPTOM_TEXT == 'vomiting' |
-              SYMPTOM_TEXT == 'cold' | SYMPTOM_TEXT == 'urinary' |
-              SYMPTOM_TEXT == 'cough' | SYMPTOM_TEXT == 'hotness' |
-              SYMPTOM_TEXT == 'lithotripsy' | SYMPTOM_TEXT == 'cirrhotic' |
-              SYMPTOM_TEXT == 'heart attack' | SYMPTOM_TEXT == 'shortness' |
-              SYMPTOM_TEXT == 'allergies' | SYMPTOM_TEXT == 'erythema' |
-              SYMPTOM_TEXT == 'discomfort' | SYMPTOM_TEXT == 'myalgia' |
-              SYMPTOM_TEXT == 'hyponatremia' | SYMPTOM_TEXT == 'ache' |
-              SYMPTOM_TEXT == 'tiredness' | SYMPTOM_TEXT == 'migraine' |
-              SYMPTOM_TEXT == 'vertigo' | SYMPTOM_TEXT == 'numb' |
-              SYMPTOM_TEXT == 'anxiety' | SYMPTOM_TEXT == 'lump' |
-              SYMPTOM_TEXT == 'nauseous' | SYMPTOM_TEXT == 'hypertension' |
-              SYMPTOM_TEXT == 'asthma' | SYMPTOM_TEXT == 'itchiness' |
-              SYMPTOM_TEXT == 'lightheaded' | SYMPTOM_TEXT == 'bumps' |
-              SYMPTOM_TEXT == 'fatigued' | SYMPTOM_TEXT == 'coughing' |
-              SYMPTOM_TEXT == 'seizure' | SYMPTOM_TEXT == 'tachycardia' |
-              SYMPTOM_TEXT == 'stiffness' | SYMPTOM_TEXT == 'cancer' |
-              SYMPTOM_TEXT == 'asthenia' | SYMPTOM_TEXT == 'diarrhoea' |
-              SYMPTOM_TEXT == 'consciousness' | SYMPTOM_TEXT == 'urticaria' |
-              SYMPTOM_TEXT == 'aching' | SYMPTOM_TEXT == 'cardiac' |
-              SYMPTOM_TEXT == 'dyspnoea' | SYMPTOM_TEXT == 'fainted' |
-              SYMPTOM_TEXT == 'lymphadenopathy' | SYMPTOM_TEXT == 'insomnia' |
-              SYMPTOM_TEXT == 'exhausted' | SYMPTOM_TEXT == 'cellulitis' |
-              SYMPTOM_TEXT == 'sweat' | SYMPTOM_TEXT == 'feverish' |
-              SYMPTOM_TEXT == 'migraines' | SYMPTOM_TEXT == 'hepatitis' |
-              SYMPTOM_TEXT == 'hypoaesthesia' | SYMPTOM_TEXT == 'nauseated' |
-              SYMPTOM_TEXT == 'inflamed' | SYMPTOM_TEXT == 'confusion' |
-              SYMPTOM_TEXT == 'lethargic' | SYMPTOM_TEXT == 'depression' |
-              SYMPTOM_TEXT == 'rashes' | SYMPTOM_TEXT == 'bruise' |
-              SYMPTOM_TEXT == 'paraesthesia' | SYMPTOM_TEXT == 'urine' |
-              SYMPTOM_TEXT == 'fainting' | SYMPTOM_TEXT == 'faint' |
-              SYMPTOM_TEXT == 'rheumatoid' | SYMPTOM_TEXT == 'wheezing' |
-              SYMPTOM_TEXT == 'exhaustion' | SYMPTOM_TEXT == 'tight' |
-              SYMPTOM_TEXT == 'blisters' | SYMPTOM_TEXT == 'syncope' |
-              SYMPTOM_TEXT == 'lightheadedness' | SYMPTOM_TEXT == 'lethargy' |
-              SYMPTOM_TEXT == 'bump' | SYMPTOM_TEXT == 'heat')) %>%
+           (SYMPTOM_TEXT == 'pain' | SYMPTOM_TEXT == 'headache' |
+              SYMPTOM_TEXT == 'fever' | SYMPTOM_TEXT == 'chills' |
+              SYMPTOM_TEXT == 'rash' | SYMPTOM_TEXT == 'fatigue' |
+              SYMPTOM_TEXT == 'swelling' | SYMPTOM_TEXT == 'sore' |
+              SYMPTOM_TEXT == 'nausea' | SYMPTOM_TEXT == 'aches')) %>%
   arrange(desc(Count)) %>%
   ungroup()
 
+
+
 save.image('Vaccine_Web_App/Vax_data.RData')
+
+
+#Vax_load_alt = Vax_reports %>% 
+#  select(VAX_TYPE, SYMPTOM_TEXT) %>%
+#  separate_rows(SYMPTOM_TEXT, sep = '[^[:alpha:]]+') %>%
+#  group_by(VAX_TYPE, SYMPTOM_TEXT = tolower(SYMPTOM_TEXT)) %>%
+#  summarise(Count = n()) %>%
+#  arrange(desc(Count)) %>%
+#  ungroup() #Diging through top ten symptoms
 
 # write.csv(Vax_load, '../Info_Load.csv')
 #Story: You are presenting this to a medical company that wants to make money

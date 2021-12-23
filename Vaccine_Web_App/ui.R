@@ -18,7 +18,6 @@ shinyUI(fluidPage(
     # create input for items
     sidebarLayout(
         sidebarPanel(
-            selectizeInput('VAX_TYPE', label = 'Vaccine for', choices = NULL),
             selectizeInput('SYMPTOM_TEXT', label = 'Symptom', choices = NULL)
         ),
     mainPanel(
@@ -34,7 +33,9 @@ shinyUI(fluidPage(
             tabPanel("By Manufacturer", fluidRow(
                 plotlyOutput("Symptom_man", height = "360", width = "540"),
                 plotlyOutput("Critical_man", height = "360", width = "540"),
-                plotlyOutput("Dead_man", height = "360", width = "540")))
+                plotlyOutput("Dead_man", height = "360", width = "540"))),
+            tabPanel("Overall chance", fluidRow(
+                plotlyOutput("overall", height = "720", width = "1080")))
             )
         )
     )
