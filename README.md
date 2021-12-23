@@ -20,16 +20,18 @@ Finding top ten most common symptoms for the COVID-19 vaccine
 #### How safe is the vaccine?
 4 Bar graphs (stack, percents):
  - Overall
- - Per Gender
+ - <strike>Per Gender
  - Per age group
- - Per Manufacturer
+ - Per Manufacturer</strike> 
+ - Discalmer: May not finish the other three graphs due to time contrants, but it seems that the first is sufficent upon answering this question
 
 ### Data source
 
 https://vaers.hhs.gov/data/datasets.html?
 
 ### Updates:
- - 12/22/21: Fixed box problem. Changed narrative to find a conclusion.
+ - update 12/22/21_V2 or 12/23/21 coming soon
+ - 12/22/21_V1: Fixed box problem. Changed narrative to find a conclusion.
    - Disclamer: I have no intent to show any political bias. I'm answering these questions with data so that all of us may see it for ourselves.
    - Note: I am doing everything I can to avoid anything that could be misleading, or would lead to any sort of bias.
  - 12/20/21: putting age groups and gender on separate graphs (cleanup)
