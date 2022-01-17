@@ -5,5 +5,7 @@ library(maps)
 library(DT)
 library(htmltools)
 library(plotly)
+library(summaryBox)
+library(bslib)
 
 load('Vax_data.RData')
