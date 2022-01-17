@@ -17,11 +17,11 @@ Finding top ten most common symptoms for the COVID-19 vaccine
  - Per age group
  - Per Manufacturer
 
-#### How safe is the vaccine?
+#### How safe is the vaccine? What will happen if it does go wrong?
 4 Bar graphs (stack, percents):
  - Overall
- - <strike>Per Gender
- - Per age group</strike> 
+ - Per Gender
+ - Per age group (work in progress 
  - Per Manufacturer
  - Discalmer: May not finish the other three graphs due to time contrants, but it seems that the first is sufficent upon answering this question
 
@@ -31,6 +31,10 @@ Finding top ten most common symptoms for the COVID-19 vaccine
 - https://covid.cdc.gov/covid-data-tracker/#vaccinations_vacc-total-admin-rate-total
 
 ### Updates:
+ - 1/17/22: First update in the new year, and a big update too:
+   - Shiny app redesign (now with one graph and three boxes that are a work in progress)
+   - Found a dataset that came with VAERS, but didn't bother using until now (VAERSSYMPTOMS dataset)
+      - Makes the whole symptom search a lot easier
  - 12/23/21_V2: Added per manufacturer last second
  - 12/23/21_V1: Conclusions found. Just about ready to present
  - 12/22/21: Fixed box problem. Changed narrative to find a conclusion.
