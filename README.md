@@ -31,6 +31,7 @@ Finding top ten most common symptoms for the COVID-19 vaccine
 - https://covid.cdc.gov/covid-data-tracker/#vaccinations_vacc-total-admin-rate-total
 
 ### Updates:
+ - 2/3/22: Possibly final update unless new update states otherwise
  - 1/31/22: Second update of the new year with major changes:
      - more tabs to complete the goals above
          - created bar graphs by symptom, age, gender and manufacturer
