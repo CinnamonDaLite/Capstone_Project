@@ -28,7 +28,7 @@ Vax_reports$SEX[Vax_reports$SEX == 'U'] <- 'Unknown'
 #Need to replace "" with NA so that the NA may be removed
 Vax_reports[Vax_reports == ''] <- NA
 
-#getting top 20 symptoms
+#getting top 10 symptoms
 top_sym = Vax_reports %>%
   pivot_longer(12:16, names_to = 'SYM_NUMBER', values_to = 'SYMPTOM',
                values_drop_na = TRUE) %>%

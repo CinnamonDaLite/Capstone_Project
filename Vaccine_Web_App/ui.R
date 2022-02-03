@@ -25,8 +25,7 @@ shinyUI(fluidPage(
         ),
     mainPanel(
         tabsetPanel(
-          tabPanel("Splash page", fluidRow(
-            textOutput('Intro')
+          tabPanel("Splash page", fluidPage(htmlOutput('Intro')
             )),
             tabPanel("Symptom graph", fluidRow( #Symptom
               plotlyOutput("symptoms", height = "840", width = "1280")),
@@ -70,9 +69,20 @@ shinyUI(fluidPage(
                          htmlOutput('per_manu'), style = "warning", border = 'bottom'),
               summaryBox('Box 3', htmlOutput('manu_deaths'), 
                           style = "danger", border = 'bottom')
-            )), 
-          tabPanel('About', fluidRow(
-              textOutput('About')
+            )),
+          tabPanel('Conclusion', fluidRow(
+              htmlOutput('Conclusion') 
+          )),
+          tabPanel('About', fluidPage(
+              h5('Noah Montero is a free lancing computer scientist who enjoyes coding and anything tech-related.'),
+              h5('He is also interested in asssisting the medical business with anything tech-related including data science.'),
+              h5('The list of things he does for a hobby is the following'),
+              h6('1. build custom desktops'),
+              h6('2. provide tech support for family and friends'),
+              h6('3. Tweek linux boxes for gamming/peak performance'),
+              h6('4. Coding projects that are soon to be made'),
+              h5('You can find him on LinkedIn via link below'),
+              uiOutput('linkedin')
               ))
             )
         )
