@@ -4,13 +4,6 @@
 #by merging into one, cleaner dataset
 
 #Importing nessecery libraries
-import nltk
-from nltk.probability import FreqDist
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-import string
-import re
 import numpy as np
 import pandas as pd
 

@@ -30,45 +30,45 @@ shinyUI(fluidPage(
             tabPanel("Symptom graph", fluidRow( #Symptom
               plotlyOutput("symptoms", height = "840", width = "1280")),
               fluidRow(
-                  summaryBox('Most Common Symptom', htmlOutput('sym_rank_1'), 
-                             style = "primary", border = 'bottom'),
-                  summaryBox('Life Threatening symptom', htmlOutput('top_LT'),  
-                             style = "warning", border = 'bottom'),
+                  summaryBox('Most Common Symptom', htmlOutput('sym_rank_1'),
+                             icon = 'fas fa-syringe', style = "primary", border = 'bottom'),
+                  summaryBox('Life Threatening symptom', htmlOutput('top_LT'),
+                             icon = 'fas fa-biohazard', style = "warning", border = 'bottom'),
                   summaryBox('Fatal symptom', htmlOutput('top_D'),  
-                             style = "danger", border = 'bottom')
+                             icon = 'fas fa-skull-crossbones', style = "danger", border = 'bottom')
               )),
           
           tabPanel("Gender graph", fluidRow( #Gender
             plotlyOutput("sex", height = "840", width = "1280")),
             fluidRow(
                 summaryBox('Symptom Commonality', htmlOutput('sym_sex'), 
-                           style = "primary", border = 'bottom'),
+                           icon = 'fas fa-syringe', style = "primary", border = 'bottom'),
                 summaryBox('Life Threatening commonality', htmlOutput('LT_sex'),  
-                           style = "warning", border = 'bottom'),
+                           icon = 'fas fa-biohazard', style = "warning", border = 'bottom'),
                 summaryBox('Deaths', htmlOutput('D_sex'),  
-                           style = "danger", border = 'bottom')
+                           icon = 'fas fa-skull-crossbones', style = "danger", border = 'bottom')
             )),
           
           tabPanel("Age graph", fluidRow( #Age
             plotlyOutput("age_group", height = "840", width = "1280")),
             fluidRow(
                 summaryBox('Symptom Commonality', htmlOutput('age_sym'), 
-                           style = "primary", border = 'bottom'),
+                           icon = 'fas fa-syringe', style = "primary", border = 'bottom'),
                 summaryBox('Life Threatening commonality', htmlOutput('age_LT'),  
-                           style = "warning", border = 'bottom'),
+                           icon = 'fas fa-biohazard', style = "warning", border = 'bottom'),
                 summaryBox('Deaths', htmlOutput('age_deaths'),  
-                           style = "danger", border = 'bottom')
+                           icon = 'fas fa-skull-crossbones', style = "danger", border = 'bottom')
             )),
           
           tabPanel("Manufacturer graph", fluidRow( #Manufacturer
             plotlyOutput("manu", height = "840", width = "1280")),
             fluidRow(
-              summaryBox('Percentage of people fully vaccinated', 
-                         htmlOutput('percent'), style = "primary", border = 'bottom'),
+              summaryBox('Symptom Shots', htmlOutput('percent'), icon = 'fas fa-syringe', 
+                         style = "primary", border = 'bottom'),
               summaryBox('Percentage of people by Manufacturer', 
                          htmlOutput('per_manu'), style = "warning", border = 'bottom'),
-              summaryBox('Box 3', htmlOutput('manu_deaths'), 
-                          style = "danger", border = 'bottom')
+              summaryBox('Manufacturer deaths', htmlOutput('manu_deaths'), 
+                         icon = 'fas fa-skull-crossbones', style = "danger", border = 'bottom')
             )),
           tabPanel('Conclusion', fluidRow(
               htmlOutput('Conclusion') 

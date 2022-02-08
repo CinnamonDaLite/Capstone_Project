@@ -10,7 +10,6 @@
 shinyServer(function(input, output, session) {
     
     common_sym <- reactive({
-        temp_sym = Vax_load %>% drop_na()
         if(input$SYMPTOM == 'All'){
             temp = Vax_load
             
@@ -37,6 +36,7 @@ shinyServer(function(input, output, session) {
         } else {
             temp = temp %>% filter(VAX_MANU == input$VAX_MANU)
         }
+        temp_sym = temp %>% drop_na()
     })
     
     
@@ -266,21 +266,9 @@ shinyServer(function(input, output, session) {
                    yaxis = list(title = 'Count'), barmode = 'stack')
     })
     
-    output$Intro = renderText('<h2>Intro:</h2>
-     <h4>If the vaccine is safe, why are there people not taking it?</h4>
-    <h4>Could it be because they are not reciving the treatment they need to bear through their symptoms for this vaccine?</h4>
-    <h4>Or could it be that the vaccine is not as safe as we thought?</h4>
-    <h4>How can we fix it so everyone can safely take the vaccine?</h4>
-    <h2>Goals:</h2>
-    <h4>What kind of medication would help our patiants after taking the vaccine?</h4>
-    <h4>Finding top 20 most common symptoms for the COVID-19 vaccine 4 Bar graphs:</h4>
-    <p>Per Symptom</p> 
-    <p>Per Gender</p> 
-    <p>Per age group</p> 
-    <p>Per Manufacturer</p>
-    <h2>Data sources:</h2>
-    <p><a href = "https://vaers.hhs.gov/data/datasets.html?">VAERS</a></p>
-    <p><a href = "https://covid.cdc.gov/covid-data-tracker/#vaccinations_vacc-total-admin-rate-total">CDC COVID data</a></p>')
+    output$Intro = renderText('<h2>Instuctions:</h2>
+    <h4>Click through different tabs to see different different graphs and different corralations</h4>
+    <h4>Use the drop bar to select a specific factor that may cause the graph to display a different result</h4>')
     
     output$Conclusion = renderText('<h4> Most common symptoms: </h4>
     <p>1. The overall most common symptom from the COVID-19 shot is Headache </p> 
